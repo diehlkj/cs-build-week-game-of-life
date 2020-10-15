@@ -1,11 +1,27 @@
-import React from 'react';
-import 'styling/app.scss';
+// * React
+import React from "react";
+
+// * Redux
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import { rootReducer as reducers } from "redux/reducers/index";
+
+// * Major Components
+import Canvas from "components/Canvas";
+
+// * Styling
+import "styling/app.scss";
+
+const store = createStore(reducers, applyMiddleware(thunk));
 
 function App() {
   return (
-    <div className="App">
-      hi
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <Canvas />
+      </div>
+    </Provider>
   );
 }
 
