@@ -9,6 +9,7 @@ import { rootReducer as reducers } from "redux/reducers/index";
 
 // * Major Components
 import Grid from "components/Grid";
+import SimControls from "components/SimControls";
 
 // * Styling
 import "styling/app.scss";
@@ -22,6 +23,7 @@ function App() {
         <div className="grid-container">
           <Grid />
         </div>
+        <SimControls />
       </div>
     </Provider>
   );

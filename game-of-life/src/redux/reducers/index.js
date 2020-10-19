@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 
-import { canvasReducer } from "redux/reducers/canvasReducer";
+import { gridReducer } from "redux/reducers/gridReducer";
 
 export const rootReducer = combineReducers({
-  canvasReducer,
+  gridReducer,
 });

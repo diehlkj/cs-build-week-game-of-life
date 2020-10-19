@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 // import { connect } from "react-redux";
 
 const Grid = () => {
-  const width = 25;
-  const height = 25;
+  const width = 100;
+  const height = 100;
   const size = [];
 
   for (let i = 1; i <= width * height; i++) {
@@ -26,9 +26,10 @@ const Grid = () => {
   const toggleLife = (e) => {
     e.preventDefault();
     console.log("I clicked");
-    
+
     console.log(e.target.style.backgroundColor);
-    if (e.target.style.backgroundColor != "black") {
+
+    if (e.target.style.backgroundColor !== "black") {
       e.target.style.backgroundColor = "black";
     } else {
       e.target.style.backgroundColor = "white";
