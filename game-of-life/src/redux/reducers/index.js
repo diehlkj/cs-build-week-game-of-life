@@ -2,6 +2,6 @@ import { combineReducers } from "redux";
 
 import { canvasReducer } from "redux/reducers/canvasReducer";
 
-export const rootRenderer = combineReducers({
+export const rootReducer = combineReducers({
   canvasReducer,
 });

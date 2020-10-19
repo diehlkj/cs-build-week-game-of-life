@@ -1,22 +1,85 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { connect } from "react-redux";
+import moment from "moment";
+import { useAnimeFrame } from "utils/useAnimeFrame";
 
-const Canvas = () => {
-  let canvas = document.getElementById("my-canvas");
-  let ctx = canvas.getContext("2d");
-  let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+const Canvas = ({ canvasWidth, canvasHeight }) => {
+  //   function getPixel(imageData, x, y) {
+  //     const w = imageData.width; // Conveniently the width is here
+  //     const h = imageData.height;
 
-  let screenBuffer = imageData.data;
+  //     if (x < 0 || x >= w || y < 0 || y >= h) {
+  //       // Out of bounds
+  //       return null;
+  //     }
 
-  return (
-    <div>
-      <h1>hello in canvas</h1>
+  //     // Compute index within the array
+  //     const index = (w * y + x) * 4;
 
-      <canvas id="my-canvas"></canvas>
-    </div>
-  );
+  //     // Return a copy of the R, G, B, and A elements
+  //     return imageData.data.slice(index, index + 4);
+  //   }
+
+  //   const canvas = document.querySelector("#my-canvas");
+  //   const ctx = canvas.getContext("2d");
+  //   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+  //   const pixelRGBA = getPixel(imageData, 10, 10);
+
+  //   console.log(pixelRGBA);
+  //   ctx.putImageData(imageData, 0, 0);
+
+  const canvasRef = useRef(null);
+  // ? vvv-vvv
+  // const [stopAnimation, setStopAnimation] = useState(false);
+
+  // const doAnimation = (elapsedTime) => {
+  //   console.log("elapsed time:", elapsedTime);
+  //   console.log(canvasRef.current);
+  // };
+
+  // const [cancelAnimationFrame] = useAnimeFrame(moment.now(), doAnimation);
+
+  function getPixel(imageData, x, y) {
+    const w = imageData.width; // Conveniently the width is here
+    const h = imageData.height;
+
+    if (x < 0 || x >= w || y < 0 || y >= h) {
+      // Out of bounds
+      return null;
+    }
+
+    // Compute index within the array
+    const index = (w * y + x) * 4;
+
+    // Return a copy of the R, G, B, and A elements
+    return imageData.data.slice(index, index + 4);
+  }
+
+  // Example Usage
+  useEffect(() => {
+    const canvas = document.getElementById("my-canvas");
+    
+    const ctx = canvas.getContext("2d");
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    const pixelRGBA = getPixel(imageData, 0, 0);
+
+    console.log(pixelRGBA);
+  }, []);
+
+  return <canvas ref={canvasRef} width="200" height="200" id="my-canvas" />;
 };
 
-export default Canvas;
+const mapStateToProps = (state) => {
+  return {
+    canvasWidth: state.canvasReducer.canvasWidth,
+    canvasHeight: state.canvasReducer.canvasHeight,
+  };
+};
+
+export default connect(mapStateToProps, {})(Canvas);
 /**
  * Conways' Game of Life
  *
