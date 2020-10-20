@@ -10,12 +10,12 @@ const Grid = () => {
     size.push(i);
   }
 
-  console.log(size.length);
-  console.log(size);
+  // console.log(size.length);
+  // console.log(size);
 
   useEffect(() => {
     const cells = document.querySelectorAll(".game-cell");
-    console.log(cells);
+    // console.log(cells);
     cells.forEach((cell) => {
       cell.style.backgroundColor = "white";
     });
