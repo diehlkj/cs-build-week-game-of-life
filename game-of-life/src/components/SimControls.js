@@ -11,23 +11,23 @@ import { ReactComponent as ClearGrid } from "assets/icons/icon_clear-grid.svg";
 import { ReactComponent as Settings } from "assets/icons/icon_settings.svg";
 import { ReactComponent as Info } from "assets/icons/icon_info.svg";
 
-const SimControls = ({ gridSquared, gridResolution }) => {
+const SimControls = ({ gridSquared, iterationTime }) => {
   const [play, setPlay] = useState(false);
   const [timeOutID, setTimeOutID] = useState(undefined);
-  const iterationTime = 1000;
+  // const iterationTime = 17;
 
-  const [theCells, setTheCells] = useState();
+  const [grid, setGrid] = useState();
 
+  // ? Captures the generated grid
   useEffect(() => {
-    setTheCells(document.querySelectorAll(".game-cell"));
-    console.log(theCells);
+    setGrid(document.querySelectorAll(".game-cell"));
+    // console.log(grid);
   }, []);
-  // let count = 0;
 
   // ? Function that will handle comparison and redrawing of grid
+  // ? This is handled by an iteration timer to automatically generate the next grid generation
+  // ? Or can be called manually to iterate a single generation
   const interateGeneration = () => {
-    console.log("I iterated!");
-    const theCells = document.querySelectorAll(".game-cell");
     const deadStack = [];
     const liveStack = [];
 
@@ -40,7 +40,7 @@ const SimControls = ({ gridSquared, gridResolution }) => {
 
     // * Function to foreach through the array of cells
     // *    Checks each of the cells neighbors
-    for (let i = 0; i < theCells.length; i++) {
+    for (let i = 0; i < grid.length; i++) {
       let neighbors = 0;
 
       let tl = i - gridSquared + 1; // ? [i - Grid width + 1]
@@ -55,76 +55,84 @@ const SimControls = ({ gridSquared, gridResolution }) => {
       let bm = i + gridSquared; // ? [i + Grid width]
       let br = i + gridSquared + 1; // ? [i + Grid width + 1]
 
-      if (tl >= 0 && tl < theCells.length) {
+      if (tl >= 0 && tl < grid.length) {
         // ? [i - Grid width + 1]
-        // console.log("tl",tl);
-        if (theCells[tl].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("tl",tl);
+        if (grid[tl].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (tm >= 0 && tm < theCells.length) {
+      if (tm >= 0 && tm < grid.length) {
         // ? [i - Grid width]
-        // console.log("tm",tm);
-        if (theCells[tm].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("tm",tm);
+        if (grid[tm].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (tr >= 0 && tr < theCells.length) {
+      if (tr >= 0 && tr < grid.length) {
         // ? [i - Grid width - 1]
-        // console.log("tr",tr);
-        if (theCells[tr].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("tr",tr);
+        if (grid[tr].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (ml >= 0 && ml < theCells.length) {
+      if (ml >= 0 && ml < grid.length) {
         // ? [i - 1]
-        // console.log("ml",ml);
-        if (theCells[ml].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("ml",ml);
+        if (grid[ml].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (mr >= 0 && mr < theCells.length) {
+      if (mr >= 0 && mr < grid.length) {
         // ? [i + 1]
-        // console.log("mr",mr);
-        if (theCells[mr].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("mr",mr);
+        if (grid[mr].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (bl >= 0 && bl < theCells.length) {
+      if (bl >= 0 && bl < grid.length) {
         // ? [i + Grid width - 1]
-        // console.log("bl",bl);
-        if (theCells[bl].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("bl",bl);
+        if (grid[bl].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (bm >= 0 && bm < theCells.length) {
+      if (bm >= 0 && bm < grid.length) {
         // ? [i + Grid width]
-        // console.log("bm",bm);
-        if (theCells[bm].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("bm",bm);
+        if (grid[bm].style.backgroundColor === "black") {
           neighbors++;
         }
       }
-      if (br >= 0 && br < theCells.length) {
+      if (br >= 0 && br < grid.length) {
         // ? [i + Grid width + 1]
-        // console.log("br",br);
-        if (theCells[br].style.backgroundColor === "black") {
+        // ! -DEBUG-
+        // ! console.log("br",br);
+        if (grid[br].style.backgroundColor === "black") {
           neighbors++;
         }
       }
 
       // * If cell is alive:
-      if (theCells[i].style.backgroundColor === "black") {
+      if (grid[i].style.backgroundColor === "black") {
         // * if neighbors < 2 || neighbors > 3:
         if (neighbors < 2 || neighbors > 3) {
           // * add cell's index to dead stack
-          deadStack.push(theCells[i]);
+          deadStack.push(grid[i]);
         }
         // * else: (Cell is dead)
       } else {
         // * if neighbors == 3:
         if (neighbors == 3) {
           // * add cell's index to live stack
-          liveStack.push(theCells[i]);
+          liveStack.push(grid[i]);
         }
       }
     }
@@ -152,52 +160,24 @@ const SimControls = ({ gridSquared, gridResolution }) => {
     setPlay(!play);
   };
 
-  // useEffect(() => {
-  //   const toChange = [];
-
-  //   const theCells = document.querySelectorAll(".game-cell");
-
-  //   if (play) {
-  //     toChange.forEach((i) => {
-  //       theCells[i].style.backgroundColor = "black";
-  //     });
-
-  //     setPlay(false);
-  //     // ? -vvv- looping animation test -vvv-
-  //     //   let count = 0;
-  //     //   const cells = document.querySelectorAll(".game-cell");
-
-  //     //   let theLoop = () => {
-  //     //     setTimeout(() => {
-  //     //       if (count === 0) {
-  //     //         cells[count].style.backgroundColor = "black";
-  //     //       } else {
-  //     //         cells[count - 1].style.backgroundColor = "white";
-  //     //         cells[count].style.backgroundColor = "black";
-  //     //       }
-
-  //     //       count++;
-
-  //     //       if (count === 625) {
-  //     //         setPlay(false);
-  //     //         // cells[count - 1].style.backgroundColor = "white";
-  //     //       } else {
-  //     //         theLoop();
-  //     //       }
-  //     //     }, 5);
-
-  //     //     console.log(count);
-  //     //   };
-
-  //     //   theLoop();
-  //   }
-  // }, [play]);
-
+  // ? Clears the grid of all live cells
   const clearGrid = (e) => {
     e.preventDefault();
-    const theCells = document.querySelectorAll(".game-cell");
-    theCells.forEach((cell) => {
+    grid.forEach((cell) => {
       cell.style.backgroundColor = "white";
+    });
+  };
+
+  // ? Creates a random arrangement of live and dead cells
+  const randomGrid = (e) => {
+    e.preventDefault();
+    grid.forEach((cell) => {
+      let rndm = Math.round(Math.random());
+      if (rndm === 1) {
+        cell.style.backgroundColor = "black";
+      } else {
+        cell.style.backgroundColor = "white";
+      }
     });
   };
 
@@ -217,7 +197,7 @@ const SimControls = ({ gridSquared, gridResolution }) => {
         <Info />
       </div>
       {/* <input type="number"/> */}
-      {/* <input type="range" min="1" max="100" value="25" /> */}
+      {/* <input type="range" min="33" max="1000" value="33" /> */}
     </div>
   );
 };
@@ -225,7 +205,7 @@ const SimControls = ({ gridSquared, gridResolution }) => {
 const mapPropsToState = (state) => {
   return {
     gridSquared: state.gridReducer.gridSquared,
-    gridResolution: state.gridReducer.gridResolution,
+    iterationTime: state.gridReducer.iterationTime,
   };
 };
 
@@ -234,4 +214,4 @@ export default connect(mapPropsToState, {})(SimControls);
 // ? Next Generation            (Button)
 // ? Clear Grid                 (Button)
 // ? Grid Size                  (Number Input)
-// ? Simulation Speed           (Range Slider) [Ticks per Second]
+// ? Simulation Speed           (Range Slider) [Ticks per Second] { Range from 33ms to 1000ms or ~30fps to 1fps }

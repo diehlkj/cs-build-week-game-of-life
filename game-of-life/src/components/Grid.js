@@ -20,14 +20,14 @@ const Grid = () => {
       cell.style.backgroundColor = "white";
     });
 
-    console.log(cells[0].style.backgroundColor);
+    // console.log(cells[0].style.backgroundColor);
   }, [])
 
   const toggleLife = (e) => {
     e.preventDefault();
-    console.log("I clicked");
+    // console.log("I clicked");
 
-    console.log(e.target.style.backgroundColor);
+    // console.log(e.target.style.backgroundColor);
 
     if (e.target.style.backgroundColor !== "black") {
       e.target.style.backgroundColor = "black";
@@ -39,7 +39,7 @@ const Grid = () => {
   return (
     <>
       {size.map((index) => {
-        console.log("made square haha ");
+        // console.log("made square haha ");
         return <div key={index} className="game-cell" onClick={toggleLife}>{index}</div>;
       })}
     </>
