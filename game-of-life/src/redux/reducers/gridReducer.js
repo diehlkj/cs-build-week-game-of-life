@@ -1,5 +1,5 @@
 export const initialGridState = {
-    gridSquared: 25, // ? Number of collumns and rows
+    gridSquared: 100, // ? Number of collumns and rows
     gridResolution: 1000, // ? width & height in pixels of grid container
     // ? cell size is gridResolution / gridSquared
 };
