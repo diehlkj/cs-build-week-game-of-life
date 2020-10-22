@@ -18,6 +18,10 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
   const [play, setPlay] = useState(false);
   const [timeOutID, setTimeOutID] = useState(undefined);
   // const iterationTime = 17;
+  const [speedToggle, setSpeedToggle] = useState(false);
+  const [infoToggle, setInfoToggle] = useState(false);
+  const [sizeToggle, setSizeToggle] = useState(false);
+  const [presetToggle, setPresetToggle] = useState(false);
 
   const [grid, setGrid] = useState();
 
@@ -33,7 +37,7 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
   const interateGeneration = () => {
     const deadStack = [];
     const liveStack = [];
-    console.log("FUCK");
+
     // *    tl       tn       tr
     // ? {-1,1 } | {0,1}  | {1,1}
     // *    ml       mn       mr
@@ -189,7 +193,7 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
 
   return (
     <div className="sim-controls">
-      <div onClick={toggleAnim}>
+      <div id="icon-button" className="button-container" onClick={toggleAnim}>
         {play ? (
           <Pause className="icon-button" />
         ) : (
@@ -197,36 +201,102 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
         )}
       </div>
 
-      <div onClick={interateGeneration}>
+      <div
+        id="icon-button"
+        className="button-container"
+        onClick={interateGeneration}
+      >
         <NextGen className="icon-button" />
       </div>
 
-      <div onClick={clearGrid}>
+      <div id="icon-button" className="button-container" onClick={clearGrid}>
         <ClearGrid className="icon-button" />
       </div>
 
-      <div onClick={randomGrid}>
+      <div id="icon-button" className="button-container" onClick={randomGrid}>
         <RandomGrid className="icon-button" />
       </div>
 
-      <div>
-        <IterationSpeed className="icon-button" />
+      <div className="button-container">
+        <IterationSpeed
+          onClick={() => setSpeedToggle(!speedToggle)}
+          className="icon-button"
+          style={
+            !speedToggle
+              ? { transform: "scale(1)" }
+              : { transform: "scale(0.85)" }
+          }
+        />
+        {speedToggle ? (
+          <div className="setting-popup">
+          <input
+            className="iteration-slider"
+            type="range"
+            min="33"
+            max="1000"
+          />
+          <div className="triangle"></div>
+        </div>
+        ) : (
+          <></>
+        )}
       </div>
 
-      <div>
-        <GridScale className="icon-button" />
+      <div className="button-container">
+        <GridScale
+          onClick={() => setSizeToggle(!sizeToggle)}
+          className="icon-button"
+          style={
+            !sizeToggle
+              ? { transform: "scale(1)" }
+              : { transform: "scale(0.85)" }
+          }
+        />
+        {sizeToggle ? (
+          <div className="setting-popup">
+          <input
+            className="size-input"
+            type="number"
+            min="10"
+            max="100"
+          />
+          <div className="triangle"></div>
+        </div>
+        ) : (
+          <></>
+        )}
       </div>
 
-      <div>
-        <Presets className="icon-button" />
+      <div className="button-container">
+        <Presets
+          onClick={() => setPresetToggle(!presetToggle)}
+          className="icon-button"
+          style={
+            !presetToggle
+              ? { transform: "scale(1)" }
+              : { transform: "scale(0.85)" }
+          }
+        />
+        {presetToggle ? (
+          <div className="setting-popup">
+          <input
+            className="preset-select"
+            type="range"
+            min="33"
+            max="1000"
+          />
+          <div className="triangle"></div>
+        </div>
+        ) : (
+          <></>
+        )}
       </div>
 
-      <div>
+      <div id="icon-button" className="button-container">
         <Info className="icon-button" />
       </div>
 
       {/* <input type="number"/> */}
-      {/* <input type="range" min="33" max="1000" value="33" /> */}
     </div>
   );
 };

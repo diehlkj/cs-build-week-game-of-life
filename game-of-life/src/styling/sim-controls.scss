@@ -6,18 +6,65 @@
   flex-wrap: wrap;
   justify-content: space-around;
   width: 210px;
-  
+
   height: 420px;
 
-
-  div {
-    // width: 90px;
-    // border: 1px solid orange;
+  #icon-button:active {
+    // background: red;
+    .icon-button {
+      transform: scale(0.85);
+    }
+  }
+  
+  .button-container {
+    width: 75px;
+    border: 1px solid orange;
     margin: 15px;
 
-    .icon-button:active {
-      // background: red;
-      transform: scale(0.85);
+    
+
+    .setting-popup {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+
+      width: 225px;
+      height: 37.5px;
+      position: absolute;
+      transform: translate(-75px, -125px);
+
+      border-radius: 10px;
+      background: dodgerblue;
+
+      .triangle {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+
+        transform: translateY(15px) rotate(45deg);
+
+        background: dodgerblue;
+      }
+
+      .iteration-slider {
+        // position: relative;
+        z-index: 1;
+        width: 90%;
+      }
+      
+      .size-input {
+        // position: relative;
+        z-index: 1;
+        width: 90%;
+      }
+      
+      .preset-select {
+        // position: relative;
+        z-index: 1;
+        width: 90%;
+      }
     }
 
     // * Makes text unselectable

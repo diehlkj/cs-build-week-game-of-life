@@ -13,24 +13,26 @@ const Grid = ({ gridSquared, liveColor, deadColor }) => {
 
   useEffect(() => {
     const cells = document.querySelectorAll(".game-cell");
-    console.log(cells);
+    // console.log(cells);
     cells.forEach((cell) => {
       cell.style.backgroundColor = deadColor;
     });
 
     // console.log(cells[0].style.backgroundColor);
-  }, [deadColor])
+  }, [])
 
   const toggleLife = (e) => {
     e.preventDefault();
-    // console.log("I clicked");
 
+    // console.log("I clicked");
+    // console.log(liveColor, deadColor);
     // console.log(e.target.style.backgroundColor);
 
-    if (e.target.style.backgroundColor !== liveColor) {
-      e.target.style.backgroundColor = liveColor;
-    } else {
+    if (e.target.style.backgroundColor == liveColor) {
       e.target.style.backgroundColor = deadColor;
+    } 
+    if (e.target.style.backgroundColor == deadColor) {
+      e.target.style.backgroundColor = liveColor;
     }
     
   }

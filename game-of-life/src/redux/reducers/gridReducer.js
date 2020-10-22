@@ -3,8 +3,8 @@ export const initialGridState = {
     gridResolution: 1000, // ? width & height in pixels of grid container
     // ? cell size is gridResolution / gridSquared
     iterationTime: 100, // ? Measured in milliseconds
-    liveColor: "#2D2D2D",
-    deadColor: "#F8F7F2",
+    liveColor: "rgb(45, 45, 45)",
+    deadColor: "rgb(248, 247, 242)",
 };
 
 export const gridReducer = (state = initialGridState, action) => {
