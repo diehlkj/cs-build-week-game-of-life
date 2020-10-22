@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
-// import { connect } from "react-redux";
+import { connect } from "react-redux";
 
-const Grid = () => {
-  const width = 100;
-  const height = 100;
+const Grid = ({ gridSquared, liveColor, deadColor }) => {
   const size = [];
 
-  for (let i = 1; i <= width * height; i++) {
+  for (let i = 1; i <= gridSquared * gridSquared; i++) {
     size.push(i);
   }
 
@@ -15,13 +13,13 @@ const Grid = () => {
 
   useEffect(() => {
     const cells = document.querySelectorAll(".game-cell");
-    // console.log(cells);
+    console.log(cells);
     cells.forEach((cell) => {
-      cell.style.backgroundColor = "white";
+      cell.style.backgroundColor = deadColor;
     });
 
     // console.log(cells[0].style.backgroundColor);
-  }, [])
+  }, [deadColor])
 
   const toggleLife = (e) => {
     e.preventDefault();
@@ -29,10 +27,10 @@ const Grid = () => {
 
     // console.log(e.target.style.backgroundColor);
 
-    if (e.target.style.backgroundColor !== "black") {
-      e.target.style.backgroundColor = "black";
+    if (e.target.style.backgroundColor !== liveColor) {
+      e.target.style.backgroundColor = liveColor;
     } else {
-      e.target.style.backgroundColor = "white";
+      e.target.style.backgroundColor = deadColor;
     }
     
   }
@@ -46,4 +44,12 @@ const Grid = () => {
   );
 };
 
-export default Grid;
+const mapPropsToState = (state) => {
+  return {
+    gridSquared: state.gridReducer.gridSquared,
+    liveColor: state.gridReducer.liveColor,
+    deadColor: state.gridReducer.deadColor,
+  };
+};
+
+export default connect(mapPropsToState, {})(Grid);

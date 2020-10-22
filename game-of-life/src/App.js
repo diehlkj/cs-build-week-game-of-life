@@ -10,6 +10,8 @@ import { rootReducer as reducers } from "redux/reducers/index";
 // * Major Components
 import Grid from "components/Grid";
 import SimControls from "components/SimControls";
+import About from "components/About";
+import AdditionalControlOptions from "components/AdditionalControlOptions";
 
 // * Styling
 import "styling/app.scss";
@@ -23,7 +25,22 @@ function App() {
         <div className="grid-container">
           <Grid />
         </div>
-        <SimControls />
+
+        <section>
+          <h1>
+            CONWAY'S
+            <br />
+            GAME
+            <br />
+            OF
+            <br />
+            LIFE
+          </h1>
+
+          {/* <About /> */}
+          {/* <AdditionalControlOptions /> */}
+          <SimControls />
+        </section>
       </div>
     </Provider>
   );
@@ -32,9 +49,9 @@ function App() {
 export default App;
 
 // TODO: Function to regenerate the grid according to cell count and resolution defined by the user.
-  // TODO: This fuction will need to redraw, then trigger a recapture of the grids state in simControls
+// TODO: This fuction will need to redraw, then trigger a recapture of the grids state in simControls
 
-// TODO: When the simulation is running, gray out the iterate button, clear button, and controls 
+// TODO: When the simulation is running, gray out the iterate button, clear button, and controls
 // TODO: for changing resolution and cell count.
 /**
  * Conways' Game of Life
@@ -48,5 +65,5 @@ export default App;
  * 2. Any live cell with two or three live neighbours lives on to the next generation.
  * 3. Any live cell with more than three live neighbours dies, as if by over-population.
  * 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
- * 
+ *
  */

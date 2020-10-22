@@ -8,10 +8,13 @@ import { ReactComponent as Play } from "assets/icons/icon_play.svg";
 import { ReactComponent as Pause } from "assets/icons/icon_pause.svg";
 import { ReactComponent as NextGen } from "assets/icons/icon_next-gen.svg";
 import { ReactComponent as ClearGrid } from "assets/icons/icon_clear-grid.svg";
-import { ReactComponent as Settings } from "assets/icons/icon_settings.svg";
 import { ReactComponent as Info } from "assets/icons/icon_info.svg";
+import { ReactComponent as GridScale } from "assets/icons/icon_grid-scale.svg";
+import { ReactComponent as IterationSpeed } from "assets/icons/icon_iteration-speed.svg";
+import { ReactComponent as Presets } from "assets/icons/icon_presets.svg";
+import { ReactComponent as RandomGrid } from "assets/icons/icon_random-grid.svg";
 
-const SimControls = ({ gridSquared, iterationTime }) => {
+const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
   const [play, setPlay] = useState(false);
   const [timeOutID, setTimeOutID] = useState(undefined);
   // const iterationTime = 17;
@@ -30,7 +33,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
   const interateGeneration = () => {
     const deadStack = [];
     const liveStack = [];
-
+    console.log("FUCK");
     // *    tl       tn       tr
     // ? {-1,1 } | {0,1}  | {1,1}
     // *    ml       mn       mr
@@ -59,7 +62,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i - Grid width + 1]
         // ! -DEBUG-
         // ! console.log("tl",tl);
-        if (grid[tl].style.backgroundColor === "black") {
+        if (grid[tl].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -67,7 +70,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i - Grid width]
         // ! -DEBUG-
         // ! console.log("tm",tm);
-        if (grid[tm].style.backgroundColor === "black") {
+        if (grid[tm].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -75,7 +78,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i - Grid width - 1]
         // ! -DEBUG-
         // ! console.log("tr",tr);
-        if (grid[tr].style.backgroundColor === "black") {
+        if (grid[tr].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -83,7 +86,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i - 1]
         // ! -DEBUG-
         // ! console.log("ml",ml);
-        if (grid[ml].style.backgroundColor === "black") {
+        if (grid[ml].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -91,7 +94,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i + 1]
         // ! -DEBUG-
         // ! console.log("mr",mr);
-        if (grid[mr].style.backgroundColor === "black") {
+        if (grid[mr].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -99,7 +102,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i + Grid width - 1]
         // ! -DEBUG-
         // ! console.log("bl",bl);
-        if (grid[bl].style.backgroundColor === "black") {
+        if (grid[bl].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -107,7 +110,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i + Grid width]
         // ! -DEBUG-
         // ! console.log("bm",bm);
-        if (grid[bm].style.backgroundColor === "black") {
+        if (grid[bm].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
@@ -115,13 +118,13 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // ? [i + Grid width + 1]
         // ! -DEBUG-
         // ! console.log("br",br);
-        if (grid[br].style.backgroundColor === "black") {
+        if (grid[br].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
 
       // * If cell is alive:
-      if (grid[i].style.backgroundColor === "black") {
+      if (grid[i].style.backgroundColor === liveColor) {
         // * if neighbors < 2 || neighbors > 3:
         if (neighbors < 2 || neighbors > 3) {
           // * add cell's index to dead stack
@@ -130,7 +133,7 @@ const SimControls = ({ gridSquared, iterationTime }) => {
         // * else: (Cell is dead)
       } else {
         // * if neighbors == 3:
-        if (neighbors == 3) {
+        if (neighbors === 3) {
           // * add cell's index to live stack
           liveStack.push(grid[i]);
         }
@@ -139,12 +142,12 @@ const SimControls = ({ gridSquared, iterationTime }) => {
 
     // * Sets new dead cells
     deadStack.forEach((i) => {
-      i.style.backgroundColor = "white";
+      i.style.backgroundColor = deadColor;
     });
 
     // * Sets new live cells
     liveStack.forEach((i) => {
-      i.style.backgroundColor = "black";
+      i.style.backgroundColor = liveColor;
     });
   };
 
@@ -164,38 +167,64 @@ const SimControls = ({ gridSquared, iterationTime }) => {
   const clearGrid = (e) => {
     e.preventDefault();
     grid.forEach((cell) => {
-      cell.style.backgroundColor = "white";
+      cell.style.backgroundColor = deadColor;
     });
   };
 
   // ? Creates a random arrangement of live and dead cells
   const randomGrid = (e) => {
     e.preventDefault();
+    console.log("liveColor: ", liveColor);
+    console.log("deadColor: ", deadColor);
+
     grid.forEach((cell) => {
       let rndm = Math.round(Math.random());
       if (rndm === 1) {
-        cell.style.backgroundColor = "black";
+        cell.style.backgroundColor = liveColor;
       } else {
-        cell.style.backgroundColor = "white";
+        cell.style.backgroundColor = deadColor;
       }
     });
   };
 
   return (
     <div className="sim-controls">
-      <div onClick={toggleAnim}>{play ? <Pause /> : <Play />}</div>
+      <div onClick={toggleAnim}>
+        {play ? (
+          <Pause className="icon-button" />
+        ) : (
+          <Play className="icon-button" />
+        )}
+      </div>
+
       <div onClick={interateGeneration}>
-        <NextGen />
+        <NextGen className="icon-button" />
       </div>
+
       <div onClick={clearGrid}>
-        <ClearGrid />
+        <ClearGrid className="icon-button" />
       </div>
+
+      <div onClick={randomGrid}>
+        <RandomGrid className="icon-button" />
+      </div>
+
       <div>
-        <Settings />
+        <IterationSpeed className="icon-button" />
       </div>
+
       <div>
-        <Info />
+        <GridScale className="icon-button" />
       </div>
+
+      <div>
+        <Presets className="icon-button" />
+      </div>
+
+      <div>
+        <Info className="icon-button" />
+      </div>
+
       {/* <input type="number"/> */}
       {/* <input type="range" min="33" max="1000" value="33" /> */}
     </div>
@@ -206,6 +235,8 @@ const mapPropsToState = (state) => {
   return {
     gridSquared: state.gridReducer.gridSquared,
     iterationTime: state.gridReducer.iterationTime,
+    liveColor: state.gridReducer.liveColor,
+    deadColor: state.gridReducer.deadColor,
   };
 };
 
