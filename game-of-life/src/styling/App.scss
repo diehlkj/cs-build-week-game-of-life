@@ -3,11 +3,7 @@
 @import "styling/grid.scss";
 @import "styling/sim-controls.scss";
 
-@font-face {
-  font-family: "BGP";
-  src: local("BigJohnPRO-Regular"),
-    url("../assets/fonts/BigJohnPRO-Regular.otf") format("truetype");
-}
+
 
 * {
   box-sizing: border-box;
@@ -39,7 +35,7 @@ section {
     margin-left: 15px;
     line-height: 1.1em;
     color: $theme-light;
-    font-family: BGP;
+    font-family: $BJP;
     font-size: 5em;
     height: calc(1000px - 420px);
   }

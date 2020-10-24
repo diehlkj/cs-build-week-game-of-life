@@ -1,46 +1,57 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { setGridInstance } from "redux/actions";
 
-const Grid = ({ gridSquared, liveColor, deadColor }) => {
+const Grid = ({
+  gridSquared,
+  gridResolution,
+  liveColor,
+  deadColor,
+  gridInstance,
+  setGridInstance,
+}) => {
   const size = [];
 
+  const cellSize = gridResolution / gridSquared;
   for (let i = 1; i <= gridSquared * gridSquared; i++) {
     size.push(i);
   }
 
-  // console.log(size.length);
-  // console.log(size);
-
   useEffect(() => {
     const cells = document.querySelectorAll(".game-cell");
-    // console.log(cells);
-    cells.forEach((cell) => {
+    setGridInstance(cells);
+
+    gridInstance.forEach((cell) => {
       cell.style.backgroundColor = deadColor;
     });
-
-    // console.log(cells[0].style.backgroundColor);
-  }, [])
+  }, [gridSquared]);
 
   const toggleLife = (e) => {
     e.preventDefault();
 
-    // console.log("I clicked");
-    // console.log(liveColor, deadColor);
-    // console.log(e.target.style.backgroundColor);
-
     if (e.target.style.backgroundColor == liveColor) {
       e.target.style.backgroundColor = deadColor;
-    } 
-    if (e.target.style.backgroundColor == deadColor) {
+    } else {
       e.target.style.backgroundColor = liveColor;
     }
-    
-  }
+  };
   return (
     <>
       {size.map((index) => {
-        // console.log("made square haha ");
-        return <div key={index} className="game-cell" onClick={toggleLife}>{index}</div>;
+        return (
+          <div
+            key={index}
+            className="game-cell"
+            style={{
+              width: cellSize,
+              height: cellSize,
+              backgroundColor: deadColor,
+            }}
+            onClick={toggleLife}
+          >
+            {index}
+          </div>
+        );
       })}
     </>
   );
@@ -49,9 +60,13 @@ const Grid = ({ gridSquared, liveColor, deadColor }) => {
 const mapPropsToState = (state) => {
   return {
     gridSquared: state.gridReducer.gridSquared,
+    gridResolution: state.gridReducer.gridResolution,
     liveColor: state.gridReducer.liveColor,
     deadColor: state.gridReducer.deadColor,
+    gridInstance: state.gridReducer.gridInstance,
   };
 };
 
-export default connect(mapPropsToState, {})(Grid);
+export default connect(mapPropsToState, {
+  setGridInstance,
+})(Grid);

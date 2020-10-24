@@ -18,32 +18,39 @@
   
   .button-container {
     width: 75px;
-    border: 1px solid orange;
+    // border: 1px solid orange;
     margin: 15px;
 
     
 
     .setting-popup {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       opacity: 1;
 
       width: 225px;
-      height: 37.5px;
+      height: 50px;
       position: absolute;
-      transform: translate(-75px, -125px);
+      transform: translate(-75px, -135px);
 
       border-radius: 10px;
       background: dodgerblue;
+
+      label {
+        font-family: $BJP;
+        font-size: 1.5em;
+        color: $theme-light;
+        width: 90%;
+      }
 
       .triangle {
         position: absolute;
         width: 20px;
         height: 20px;
 
-        transform: translateY(15px) rotate(45deg);
+        transform: translateY(20px) rotate(45deg);
 
         background: dodgerblue;
       }
@@ -58,6 +65,11 @@
         // position: relative;
         z-index: 1;
         width: 90%;
+        border: none;
+        border-radius: 10px;
+        height: 25px;
+        padding: 0 10px;
+        background: $theme-light;
       }
       
       .preset-select {

@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 // import { useAnimeFrame } from "utils/useAnimeFrame";
 // import moment from "moment";
+import {
+  setGridSize,
+  setSpeed,
+  setLiveColor,
+  setDeadColor,
+} from "redux/actions";
 
 // ? Icon Imports
 import { ReactComponent as Play } from "assets/icons/icon_play.svg";
@@ -14,22 +20,25 @@ import { ReactComponent as IterationSpeed } from "assets/icons/icon_iteration-sp
 import { ReactComponent as Presets } from "assets/icons/icon_presets.svg";
 import { ReactComponent as RandomGrid } from "assets/icons/icon_random-grid.svg";
 
-const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
+const SimControls = ({
+  gridSquared,
+  iterationTime,
+  liveColor,
+  deadColor,
+  setGridSize,
+  setSpeed,
+  setLiveColor,
+  setDeadColor,
+  gridInstance,
+}) => {
   const [play, setPlay] = useState(false);
   const [timeOutID, setTimeOutID] = useState(undefined);
-  // const iterationTime = 17;
   const [speedToggle, setSpeedToggle] = useState(false);
   const [infoToggle, setInfoToggle] = useState(false);
   const [sizeToggle, setSizeToggle] = useState(false);
   const [presetToggle, setPresetToggle] = useState(false);
 
-  const [grid, setGrid] = useState();
-
   // ? Captures the generated grid
-  useEffect(() => {
-    setGrid(document.querySelectorAll(".game-cell"));
-    // console.log(grid);
-  }, []);
 
   // ? Function that will handle comparison and redrawing of grid
   // ? This is handled by an iteration timer to automatically generate the next grid generation
@@ -47,7 +56,7 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
 
     // * Function to foreach through the array of cells
     // *    Checks each of the cells neighbors
-    for (let i = 0; i < grid.length; i++) {
+    for (let i = 0; i < gridInstance.length; i++) {
       let neighbors = 0;
 
       let tl = i - gridSquared + 1; // ? [i - Grid width + 1]
@@ -62,84 +71,87 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
       let bm = i + gridSquared; // ? [i + Grid width]
       let br = i + gridSquared + 1; // ? [i + Grid width + 1]
 
-      if (tl >= 0 && tl < grid.length) {
+      if (tl >= 0 && tl < gridInstance.length) {
         // ? [i - Grid width + 1]
         // ! -DEBUG-
         // ! console.log("tl",tl);
-        if (grid[tl].style.backgroundColor === liveColor) {
+        if (gridInstance[tl].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (tm >= 0 && tm < grid.length) {
+      if (tm >= 0 && tm < gridInstance.length) {
         // ? [i - Grid width]
         // ! -DEBUG-
         // ! console.log("tm",tm);
-        if (grid[tm].style.backgroundColor === liveColor) {
+        if (gridInstance[tm].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (tr >= 0 && tr < grid.length) {
+      if (tr >= 0 && tr < gridInstance.length) {
         // ? [i - Grid width - 1]
         // ! -DEBUG-
         // ! console.log("tr",tr);
-        if (grid[tr].style.backgroundColor === liveColor) {
+        if (gridInstance[tr].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (ml >= 0 && ml < grid.length) {
+      if (ml >= 0 && ml < gridInstance.length) {
         // ? [i - 1]
         // ! -DEBUG-
         // ! console.log("ml",ml);
-        if (grid[ml].style.backgroundColor === liveColor) {
+        if (gridInstance[ml].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (mr >= 0 && mr < grid.length) {
+      if (mr >= 0 && mr < gridInstance.length) {
         // ? [i + 1]
         // ! -DEBUG-
         // ! console.log("mr",mr);
-        if (grid[mr].style.backgroundColor === liveColor) {
+        if (gridInstance[mr].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (bl >= 0 && bl < grid.length) {
+      if (bl >= 0 && bl < gridInstance.length) {
         // ? [i + Grid width - 1]
         // ! -DEBUG-
         // ! console.log("bl",bl);
-        if (grid[bl].style.backgroundColor === liveColor) {
+        if (gridInstance[bl].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (bm >= 0 && bm < grid.length) {
+      if (bm >= 0 && bm < gridInstance.length) {
         // ? [i + Grid width]
         // ! -DEBUG-
-        // ! console.log("bm",bm);
-        if (grid[bm].style.backgroundColor === liveColor) {
+        // console.log("bm",bm);
+
+        // console.log("type of bm",typeof bm);
+
+        if (gridInstance[bm].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
-      if (br >= 0 && br < grid.length) {
+      if (br >= 0 && br < gridInstance.length) {
         // ? [i + Grid width + 1]
         // ! -DEBUG-
         // ! console.log("br",br);
-        if (grid[br].style.backgroundColor === liveColor) {
+        if (gridInstance[br].style.backgroundColor === liveColor) {
           neighbors++;
         }
       }
 
       // * If cell is alive:
-      if (grid[i].style.backgroundColor === liveColor) {
+      if (gridInstance[i].style.backgroundColor === liveColor) {
         // * if neighbors < 2 || neighbors > 3:
         if (neighbors < 2 || neighbors > 3) {
           // * add cell's index to dead stack
-          deadStack.push(grid[i]);
+          deadStack.push(gridInstance[i]);
         }
         // * else: (Cell is dead)
       } else {
         // * if neighbors == 3:
         if (neighbors === 3) {
           // * add cell's index to live stack
-          liveStack.push(grid[i]);
+          liveStack.push(gridInstance[i]);
         }
       }
     }
@@ -156,8 +168,7 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
   };
 
   // ? Toggles simulation by creating and clearing intervals
-  const toggleAnim = (e) => {
-    e.preventDefault();
+  const toggleAnim = () => {
     if (play) {
       window.clearInterval(timeOutID);
       setTimeOutID(undefined);
@@ -168,20 +179,16 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
   };
 
   // ? Clears the grid of all live cells
-  const clearGrid = (e) => {
-    e.preventDefault();
-    grid.forEach((cell) => {
+  const clearGrid = () => {
+    gridInstance.forEach((cell) => {
       cell.style.backgroundColor = deadColor;
     });
   };
 
   // ? Creates a random arrangement of live and dead cells
-  const randomGrid = (e) => {
-    e.preventDefault();
-    console.log("liveColor: ", liveColor);
-    console.log("deadColor: ", deadColor);
+  const randomGrid = () => {
 
-    grid.forEach((cell) => {
+    gridInstance.forEach((cell) => {
       let rndm = Math.round(Math.random());
       if (rndm === 1) {
         cell.style.backgroundColor = liveColor;
@@ -204,22 +211,52 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
       <div
         id="icon-button"
         className="button-container"
-        onClick={interateGeneration}
+        onClick={() => {
+          if (!play) {
+            interateGeneration();
+          }
+        }}
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
       >
         <NextGen className="icon-button" />
       </div>
 
-      <div id="icon-button" className="button-container" onClick={clearGrid}>
+      <div
+        id="icon-button"
+        className="button-container"
+        onClick={() => {
+          if (!play) {
+            clearGrid();
+          }
+        }}
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
+      >
         <ClearGrid className="icon-button" />
       </div>
 
-      <div id="icon-button" className="button-container" onClick={randomGrid}>
+      <div
+        id="icon-button"
+        className="button-container"
+        onClick={() => {
+          if (!play) {
+            randomGrid();
+          }
+        }}
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
+      >
         <RandomGrid className="icon-button" />
       </div>
 
-      <div className="button-container">
+      <div
+        className="button-container"
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
+      >
         <IterationSpeed
-          onClick={() => setSpeedToggle(!speedToggle)}
+          onClick={() => {
+            if (!play) {
+              setSpeedToggle(!speedToggle);
+            }
+          }}
           className="icon-button"
           style={
             !speedToggle
@@ -229,22 +266,32 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
         />
         {speedToggle ? (
           <div className="setting-popup">
-          <input
-            className="iteration-slider"
-            type="range"
-            min="33"
-            max="1000"
-          />
-          <div className="triangle"></div>
-        </div>
+            <label>Iteration Speed</label>
+            <input
+              className="iteration-slider"
+              type="range"
+              min="33"
+              max="1000"
+              value={iterationTime}
+              onChange={(e) => setSpeed(e.target.value)}
+            />
+            <div className="triangle"></div>
+          </div>
         ) : (
           <></>
         )}
       </div>
 
-      <div className="button-container">
+      <div
+        className="button-container"
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
+      >
         <GridScale
-          onClick={() => setSizeToggle(!sizeToggle)}
+          onClick={() => {
+            if (!play) {
+              setSizeToggle(!sizeToggle);
+            }
+          }}
           className="icon-button"
           style={
             !sizeToggle
@@ -254,22 +301,32 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
         />
         {sizeToggle ? (
           <div className="setting-popup">
-          <input
-            className="size-input"
-            type="number"
-            min="10"
-            max="100"
-          />
-          <div className="triangle"></div>
-        </div>
+            <label>Grid Size</label>
+            <input
+              className="size-input"
+              type="number"
+              min="10"
+              max="100"
+              value={gridSquared}
+              onChange={(e) => setGridSize(Number(e.target.value))}
+            />
+            <div className="triangle"></div>
+          </div>
         ) : (
           <></>
         )}
       </div>
 
-      <div className="button-container">
+      <div
+        className="button-container"
+        style={!play ? { opacity: "1" } : { opacity: "0.5" }}
+      >
         <Presets
-          onClick={() => setPresetToggle(!presetToggle)}
+          onClick={() => {
+            if (!play) {
+              setPresetToggle(!presetToggle);
+            }
+          }}
           className="icon-button"
           style={
             !presetToggle
@@ -279,14 +336,9 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
         />
         {presetToggle ? (
           <div className="setting-popup">
-          <input
-            className="preset-select"
-            type="range"
-            min="33"
-            max="1000"
-          />
-          <div className="triangle"></div>
-        </div>
+            <input className="preset-select" type="range" min="33" max="1000" />
+            <div className="triangle"></div>
+          </div>
         ) : (
           <></>
         )}
@@ -295,8 +347,6 @@ const SimControls = ({ gridSquared, iterationTime, liveColor, deadColor }) => {
       <div id="icon-button" className="button-container">
         <Info className="icon-button" />
       </div>
-
-      {/* <input type="number"/> */}
     </div>
   );
 };
@@ -307,10 +357,16 @@ const mapPropsToState = (state) => {
     iterationTime: state.gridReducer.iterationTime,
     liveColor: state.gridReducer.liveColor,
     deadColor: state.gridReducer.deadColor,
+    gridInstance: state.gridReducer.gridInstance,
   };
 };
 
-export default connect(mapPropsToState, {})(SimControls);
+export default connect(mapPropsToState, {
+  setGridSize,
+  setSpeed,
+  setLiveColor,
+  setDeadColor,
+})(SimControls);
 // ? Play / Pause Simulation    (Button)
 // ? Next Generation            (Button)
 // ? Clear Grid                 (Button)
