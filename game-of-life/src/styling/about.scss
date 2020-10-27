@@ -1,0 +1,47 @@
+.about-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  padding: 30px;
+
+  background: dodgerblue;
+  z-index: 100;
+  font-family: $BJP;
+  color: $theme-light;
+
+  transition: 0.3s;
+  transition-timing-function: ease-in-out;
+  transform: translateX(400px);
+  
+  h2 {
+    font-size: 5em;
+    margin-bottom: 30px;
+    width: 100%;
+    text-align: right;
+  }
+
+  div {    
+      line-height: 2.3em;
+
+    p {
+        margin-bottom: 20px;
+        font-size: 2em;
+    }
+
+    ul {
+        font-size: 2em;
+        list-style-type: circle;
+        li {
+            margin-bottom: 10px;
+        }
+    }
+
+  }
+}

@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
+// ? React
+import React, { useState } from "react";
+
+// ? Redux
 import { connect } from "react-redux";
-// import { useAnimeFrame } from "utils/useAnimeFrame";
-// import moment from "moment";
 import {
   setGridSize,
   setSpeed,
   setLiveColor,
   setDeadColor,
 } from "redux/actions";
+
+// ? Iteration function
+// import { iterateGeneration } from "utils/iterateGeneration";
 
 // ? Icon Imports
 import { ReactComponent as Play } from "assets/icons/icon_play.svg";
@@ -31,19 +35,19 @@ const SimControls = ({
   setDeadColor,
   gridInstance,
 }) => {
+  // TODO: Condense all these state values into a single state object
+  // ? Local States
   const [play, setPlay] = useState(false);
   const [timeOutID, setTimeOutID] = useState(undefined);
   const [speedToggle, setSpeedToggle] = useState(false);
-  const [infoToggle, setInfoToggle] = useState(false);
   const [sizeToggle, setSizeToggle] = useState(false);
   const [presetToggle, setPresetToggle] = useState(false);
-
-  // ? Captures the generated grid
+  const [genCount, setGenCount] = useState(0);
 
   // ? Function that will handle comparison and redrawing of grid
   // ? This is handled by an iteration timer to automatically generate the next grid generation
   // ? Or can be called manually to iterate a single generation
-  const interateGeneration = () => {
+  const iterateGeneration = () => {
     const deadStack = [];
     const liveStack = [];
 
@@ -165,6 +169,9 @@ const SimControls = ({
     liveStack.forEach((i) => {
       i.style.backgroundColor = liveColor;
     });
+
+    let counter = document.getElementById("genCount");
+    counter.innerHTML = Number(counter.innerHTML) + 1;
   };
 
   // ? Toggles simulation by creating and clearing intervals
@@ -173,10 +180,29 @@ const SimControls = ({
       window.clearInterval(timeOutID);
       setTimeOutID(undefined);
     } else {
-      setTimeOutID(window.setInterval(interateGeneration, iterationTime));
+      setTimeOutID(window.setInterval(iterateGeneration, iterationTime));
     }
     setPlay(!play);
   };
+  // ! Below is used for calling external function
+  // const toggleAnim = () => {
+  //   if (play) {
+  //     window.clearInterval(timeOutID);
+  //     setTimeOutID(undefined);
+  //   } else {
+  //     setTimeOutID(
+  //       window.setInterval(
+  //         iterateGeneration,
+  //         iterationTime,
+  //         gridInstance,
+  //         gridSquared,
+  //         liveColor,
+  //         deadColor,
+  //       )
+  //     );
+  //   }
+  //   setPlay(!play);
+  // };
 
   // ? Clears the grid of all live cells
   const clearGrid = () => {
@@ -187,7 +213,6 @@ const SimControls = ({
 
   // ? Creates a random arrangement of live and dead cells
   const randomGrid = () => {
-
     gridInstance.forEach((cell) => {
       let rndm = Math.round(Math.random());
       if (rndm === 1) {
@@ -200,6 +225,9 @@ const SimControls = ({
 
   return (
     <div className="sim-controls">
+
+      <h2>Generation Count: <span id="genCount">{genCount}</span></h2>
+
       <div id="icon-button" className="button-container" onClick={toggleAnim}>
         {play ? (
           <Pause className="icon-button" />
@@ -213,7 +241,7 @@ const SimControls = ({
         className="button-container"
         onClick={() => {
           if (!play) {
-            interateGeneration();
+            iterateGeneration();
           }
         }}
         style={!play ? { opacity: "1" } : { opacity: "0.5" }}
@@ -227,6 +255,7 @@ const SimControls = ({
         onClick={() => {
           if (!play) {
             clearGrid();
+            document.getElementById("genCount").innerHTML = 0;
           }
         }}
         style={!play ? { opacity: "1" } : { opacity: "0.5" }}
@@ -240,6 +269,7 @@ const SimControls = ({
         onClick={() => {
           if (!play) {
             randomGrid();
+            document.getElementById("genCount").innerHTML = 0;
           }
         }}
         style={!play ? { opacity: "1" } : { opacity: "0.5" }}
@@ -300,7 +330,7 @@ const SimControls = ({
           }
         />
         {sizeToggle ? (
-          <div className="setting-popup">
+          <div className="setting-popup" id="size-input">
             <label>Grid Size</label>
             <input
               className="size-input"
@@ -345,7 +375,15 @@ const SimControls = ({
       </div>
 
       <div id="icon-button" className="button-container">
-        <Info className="icon-button" />
+        <Info
+          className="icon-button"
+          onClick={(e) => {
+            e.preventDefault();
+            let aboutSec = document.getElementsByClassName("about-container");
+            console.log(aboutSec);
+            aboutSec[0].style.transform = "translateX(0px)";
+          }}
+        />
       </div>
     </div>
   );

@@ -4,25 +4,38 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
-  width: 210px;
+  justify-content: space-between;
+  width: 180px;
+  align-self: flex-end;
+  // border: 1px solid red;
 
-  height: 420px;
+  h2 {
+    width: 100%;
+    font-family: $BJP;
+    color: $theme-light;
+    font-size: 1.6em;
+    margin-bottom: -20px;
+  }
 
   #icon-button:active {
-    // background: red;
     .icon-button {
       transform: scale(0.85);
     }
   }
-  
+
   .button-container {
     width: 75px;
-    // border: 1px solid orange;
-    margin: 15px;
+    height: 75px;
 
-    
+    margin-top: 30px;
 
+    #size-input {
+      transform: translate(-150px, -135px);
+
+      .triangle {
+        transform: translate(75px, 20px) rotate(45deg);
+      }
+    }
     .setting-popup {
       display: flex;
       flex-direction: column;
@@ -56,13 +69,11 @@
       }
 
       .iteration-slider {
-        // position: relative;
         z-index: 1;
         width: 90%;
       }
-      
+
       .size-input {
-        // position: relative;
         z-index: 1;
         width: 90%;
         border: none;
@@ -71,9 +82,8 @@
         padding: 0 10px;
         background: $theme-light;
       }
-      
+
       .preset-select {
-        // position: relative;
         z-index: 1;
         width: 90%;
       }

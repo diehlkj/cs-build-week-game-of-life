@@ -11,22 +11,21 @@ import { rootReducer as reducers } from "redux/reducers/index";
 import Grid from "components/Grid";
 import SimControls from "components/SimControls";
 import About from "components/About";
-import AdditionalControlOptions from "components/AdditionalControlOptions";
 
 // * Styling
 import "styling/app.scss";
 
-const store = createStore(reducers, applyMiddleware(thunk));
+export const store = createStore(reducers, applyMiddleware(thunk));
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
-        <div className="grid-container">
+        <section className="grid-container">
           <Grid />
-        </div>
+        </section>
 
-        <section>
+        <section className="content-controls">
           <h1>
             CONWAY'S
             <br />
@@ -37,8 +36,7 @@ function App() {
             LIFE
           </h1>
 
-          {/* <About /> */}
-          {/* <AdditionalControlOptions /> */}
+          <About />
           <SimControls />
         </section>
       </div>
