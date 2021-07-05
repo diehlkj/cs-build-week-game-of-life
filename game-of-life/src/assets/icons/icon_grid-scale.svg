@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="73" height="73" viewBox="0 0 73 73">
-  <g id="icon_grid-scale" transform="translate(-1777 -969)">
-    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(1777 969)" fill="none" stroke="#f8f7f2" stroke-width="4">
-      <circle cx="36.5" cy="36.5" r="36.5" stroke="none"/>
-      <circle cx="36.5" cy="36.5" r="34.5" fill="none"/>
-    </g>
-    <path id="Icon_material-photo-size-select-small" data-name="Icon material-photo-size-select-small" d="M34.5,22.5h-3v3h3Zm0-6h-3v3h3Zm0,12h-3v3A3.226,3.226,0,0,0,34.5,28.5Zm-12-24h-3v3h3Zm12,6h-3v3h3Zm-3-6v3h3A3.226,3.226,0,0,0,31.5,4.5Zm-27,27h12v-9H1.5v6A3.009,3.009,0,0,0,4.5,31.5Zm0-21h-3v3h3Zm18,18h-3v3h3Zm6-24h-3v3h3Zm0,24h-3v3h3Zm-24-24a3.226,3.226,0,0,0-3,3h3Zm0,12h-3v3h3Zm12-12h-3v3h3Zm-6,0h-3v3h3Z" transform="translate(1795.5 987.5)" fill="#f8f7f2"/>
-  </g>
-</svg>
