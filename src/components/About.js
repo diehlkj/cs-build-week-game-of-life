@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as Close } from "assets/icons/icon_info.svg";
+import { ReactComponent as Close } from "../assets/icons/icon_info.svg";
 
 export default function About() {
   return (

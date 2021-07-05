@@ -5,15 +5,15 @@ import React from "react";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
-import { rootReducer as reducers } from "redux/reducers/index";
+import { rootReducer as reducers } from "./redux/reducers/index";
 
 // * Major Components
-import Grid from "components/Grid";
-import SimControls from "components/SimControls";
-import About from "components/About";
+import Grid from "./components/Grid";
+import SimControls from "./components/SimControls";
+import About from "./components/About";
 
 // * Styling
-import "styling/app.scss";
+import "./styling/app.scss";
 
 export const store = createStore(reducers, applyMiddleware(thunk));
 

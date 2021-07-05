@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 
-import { gridReducer } from "redux/reducers/gridReducer";
+import { gridReducer } from "./gridReducer";
 
 export const rootReducer = combineReducers({
   gridReducer,

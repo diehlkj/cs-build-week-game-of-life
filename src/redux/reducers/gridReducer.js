@@ -4,7 +4,7 @@ import {
   UPDATE_LIVE_COLOR,
   UPDATE_DEAD_COLOR,
   UPDATE_GRID_INSTANCE,
-} from "redux/actions";
+} from "../actions";
 
 export const initialGridState = {
   gridSquared: 25, // ? Number of collumns and rows

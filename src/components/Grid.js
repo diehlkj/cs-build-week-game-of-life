@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { setGridInstance } from "redux/actions";
+import { setGridInstance } from "../redux/actions";
 
 const Grid = ({
   gridSquared,

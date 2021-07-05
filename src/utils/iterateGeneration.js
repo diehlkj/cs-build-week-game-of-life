@@ -1,4 +1,4 @@
-import { store } from "App";
+// import { store } from "../App";
 
 // ? Function that will handle comparison and redrawing of grid
 // ? This is handled by an iteration timer to automatically generate the next grid generation

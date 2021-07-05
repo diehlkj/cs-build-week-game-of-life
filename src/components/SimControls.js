@@ -8,21 +8,21 @@ import {
   setSpeed,
   setLiveColor,
   setDeadColor,
-} from "redux/actions";
+} from "../redux/actions";
 
 // ? Iteration function
 // import { iterateGeneration } from "utils/iterateGeneration";
 
 // ? Icon Imports
-import { ReactComponent as Play } from "assets/icons/icon_play.svg";
-import { ReactComponent as Pause } from "assets/icons/icon_pause.svg";
-import { ReactComponent as NextGen } from "assets/icons/icon_next-gen.svg";
-import { ReactComponent as ClearGrid } from "assets/icons/icon_clear-grid.svg";
-import { ReactComponent as Info } from "assets/icons/icon_info.svg";
-import { ReactComponent as GridScale } from "assets/icons/icon_grid-scale.svg";
-import { ReactComponent as IterationSpeed } from "assets/icons/icon_iteration-speed.svg";
-import { ReactComponent as Presets } from "assets/icons/icon_presets.svg";
-import { ReactComponent as RandomGrid } from "assets/icons/icon_random-grid.svg";
+import { ReactComponent as Play } from "../assets/icons/icon_play.svg";
+import { ReactComponent as Pause } from "../assets/icons/icon_pause.svg";
+import { ReactComponent as NextGen } from "../assets/icons/icon_next-gen.svg";
+import { ReactComponent as ClearGrid } from "../assets/icons/icon_clear-grid.svg";
+import { ReactComponent as Info } from "../assets/icons/icon_info.svg";
+import { ReactComponent as GridScale } from "../assets/icons/icon_grid-scale.svg";
+import { ReactComponent as IterationSpeed } from "../assets/icons/icon_iteration-speed.svg";
+import { ReactComponent as Presets } from "../assets/icons/icon_presets.svg";
+import { ReactComponent as RandomGrid } from "../assets/icons/icon_random-grid.svg";
 
 const SimControls = ({
   gridSquared,
