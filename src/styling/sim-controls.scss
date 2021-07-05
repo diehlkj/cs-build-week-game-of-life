@@ -1,0 +1,101 @@
+@import "styling/variables.scss";
+
+.sim-controls {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 180px;
+  align-self: flex-end;
+  // border: 1px solid red;
+
+  h2 {
+    width: 100%;
+    font-family: $BJP;
+    color: $theme-light;
+    font-size: 1.6em;
+    margin-bottom: -20px;
+  }
+
+  #icon-button:active {
+    .icon-button {
+      transform: scale(0.85);
+    }
+  }
+
+  .button-container {
+    width: 75px;
+    height: 75px;
+
+    margin-top: 30px;
+
+    #size-input {
+      transform: translate(-150px, -135px);
+
+      .triangle {
+        transform: translate(75px, 20px) rotate(45deg);
+      }
+    }
+    .setting-popup {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+
+      width: 225px;
+      height: 50px;
+      position: absolute;
+      transform: translate(-75px, -135px);
+
+      border-radius: 10px;
+      background: dodgerblue;
+
+      label {
+        font-family: $BJP;
+        font-size: 1.5em;
+        color: $theme-light;
+        width: 90%;
+      }
+
+      .triangle {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+
+        transform: translateY(20px) rotate(45deg);
+
+        background: dodgerblue;
+      }
+
+      .iteration-slider {
+        z-index: 1;
+        width: 90%;
+      }
+
+      .size-input {
+        z-index: 1;
+        width: 90%;
+        border: none;
+        border-radius: 10px;
+        height: 25px;
+        padding: 0 10px;
+        background: $theme-light;
+      }
+
+      .preset-select {
+        z-index: 1;
+        width: 90%;
+      }
+    }
+
+    // * Makes text unselectable
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+  }
+}

@@ -1,0 +1,26 @@
+@import "styling/variables.scss";
+
+.grid-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  // margin: 0;
+  width: 1002px;
+  height: 1000px;
+  // align-self: flex-start;
+  
+  .game-cell {
+    // width: 10px;
+    // height: 10px;
+    background-color: white;
+    color: transparent;
+    border: 1px solid $theme-dark;
+    text-align: center;
+
+    // * Makes text unselectable
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+  }
+}

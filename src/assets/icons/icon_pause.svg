@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="73" height="73" viewBox="0 0 73 73">
+  <g id="icon_pause" transform="translate(-1777 -969)">
+    <g id="Ellipse_2" data-name="Ellipse 2" transform="translate(1777 969)" fill="none" stroke="#f8f7f2" stroke-width="4">
+      <circle cx="36.5" cy="36.5" r="36.5" stroke="none"/>
+      <circle cx="36.5" cy="36.5" r="34.5" fill="none"/>
+    </g>
+    <g id="Icon_feather-pause" data-name="Icon feather-pause" transform="translate(1792.072 983.29)">
+      <path id="Path_3" data-name="Path 3" d="M9,6h8.1V38.419H9Z" fill="none" stroke="#f8f7f2" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_4" data-name="Path 4" d="M21,6h8.1V38.419H21Z" transform="translate(4.21)" fill="none" stroke="#f8f7f2" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

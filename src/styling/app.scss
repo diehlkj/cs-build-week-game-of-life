@@ -1,0 +1,41 @@
+@import "styling/variables.scss";
+@import "styling/reset.scss";
+@import "styling/grid.scss";
+@import "styling/about.scss";
+@import "styling/sim-controls.scss";
+
+* {
+  box-sizing: border-box;
+  margin: none;
+}
+body {
+  overflow: hidden;
+}
+.App {
+  background: $theme-dark;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100vh;
+  padding: 30px;
+
+  .content-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h1 {
+      margin-left: 15px;
+      line-height: 1.1em;
+      color: $theme-light;
+      text-align: right;
+      font-family: $BJP;
+      font-size: 5em;
+      height: calc(1000px - 420px);
+    }
+  }
+}
