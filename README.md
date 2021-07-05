@@ -1,3 +1,5 @@
+
+### You can view a live deployment [Here :)](https://diehlkj-react-gol.herokuapp.com/)
 # John Conway's Game of Life 
 
 > The **Game of Life**, also known simply as **Life**, is a [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton "Cellular automaton") devised
@@ -26,3 +28,4 @@ At each generational iteration or *tick*, the following transitions occur:
 3. Any live cell with more than three live neighbours dies, as if by over-population.
 
 4. Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+
